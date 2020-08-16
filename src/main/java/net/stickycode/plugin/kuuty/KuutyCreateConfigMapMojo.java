@@ -13,6 +13,8 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.openapitools.client.model.IoK8sApiCoreV1ConfigMap;
+import org.openapitools.client.model.IoK8sApimachineryPkgApisMetaV1ObjectMeta;
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
 /**
@@ -90,7 +92,12 @@ public class KuutyCreateConfigMapMojo
   }
 
   protected void generateFile(IoK8sApiCoreV1ConfigMap configmap, Path outputPath) {
-    Yaml yaml = new Yaml();
+    DumperOptions options = new DumperOptions();
+    options.setPrettyFlow(true);
+    options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+    options.setCanonical(false);
+    options.setExplicitStart(false);
+    Yaml yaml = new Yaml(new KuutyRepresenter(), options);
     try (BufferedWriter writer = Files.newBufferedWriter(outputPath);) {
       yaml.dump(configmap, writer);
     }
@@ -101,6 +108,15 @@ public class KuutyCreateConfigMapMojo
 
   protected Path outputPath() {
     return outputDirectory.toPath().resolve(filename);
+  }
+
+  public IoK8sApiCoreV1ConfigMap createConfigMap() {
+    IoK8sApiCoreV1ConfigMap config = new IoK8sApiCoreV1ConfigMap();
+    config.setApiVersion("apps/v1");
+    IoK8sApimachineryPkgApisMetaV1ObjectMeta metadata = new IoK8sApimachineryPkgApisMetaV1ObjectMeta();
+    metadata.setName("config");
+    config.setMetadata(metadata);
+    return config;
   }
 
 }

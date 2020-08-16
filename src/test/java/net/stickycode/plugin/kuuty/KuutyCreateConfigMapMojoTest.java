@@ -29,6 +29,18 @@ public class KuutyCreateConfigMapMojoTest {
     check("twoFiles", other);
   }
 
+  @Test
+  public void write() {
+    KuutyCreateConfigMapMojo mojo = new KuutyCreateConfigMapMojo();
+    IoK8sApiCoreV1ConfigMap other = mojo.createConfigMap();
+    other.putDataItem("one.properties", "a=value");
+    other.putDataItem("some.xml", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+      "<configuration>\n" +
+      "  <root level=\"info\" />\n" +
+      "</configuration>\n");
+    mojo.generateFile(other, Path.of("target", "config.yaml"));
+  }
+
   private void check(String example, IoK8sApiCoreV1ConfigMap other) {
     KuutyCreateConfigMapMojo mojo = new KuutyCreateConfigMapMojo();
     IoK8sApiCoreV1ConfigMap configmap = mojo.processConfigDirectory(Path.of("src/test/config", example));
