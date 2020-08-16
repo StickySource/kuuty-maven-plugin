@@ -12,11 +12,26 @@ import org.openapitools.client.model.IoK8sApiCoreV1ConfigMap;
 public class KuutyCreateConfigMapMojoTest {
 
   @Test
-  public void sanity() throws MojoExecutionException, MojoFailureException {
-    KuutyCreateConfigMapMojo mojo = new KuutyCreateConfigMapMojo();
-    IoK8sApiCoreV1ConfigMap configmap = mojo.processConfigDirectory(Path.of("src/test/config", "sanity"));
+  public void single() throws MojoExecutionException, MojoFailureException {
     IoK8sApiCoreV1ConfigMap other = new IoK8sApiCoreV1ConfigMap();
     other.putDataItem("one.properties", "a=value");
+    check("single", other);
+  }
+
+  @Test
+  public void twoFiles() throws MojoExecutionException, MojoFailureException {
+    IoK8sApiCoreV1ConfigMap other = new IoK8sApiCoreV1ConfigMap();
+    other.putDataItem("one.properties", "a=value");
+    other.putDataItem("some.xml", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+      "<configuration>\n" +
+      "  <root level=\"info\" />\n" +
+      "</configuration>\n");
+    check("twoFiles", other);
+  }
+
+  private void check(String example, IoK8sApiCoreV1ConfigMap other) {
+    KuutyCreateConfigMapMojo mojo = new KuutyCreateConfigMapMojo();
+    IoK8sApiCoreV1ConfigMap configmap = mojo.processConfigDirectory(Path.of("src/test/config", example));
     assertThat(configmap).isEqualToComparingFieldByField(other);
   }
 
