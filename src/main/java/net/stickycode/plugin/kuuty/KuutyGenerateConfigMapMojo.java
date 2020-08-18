@@ -20,8 +20,8 @@ import org.yaml.snakeyaml.Yaml;
 /**
  * Create a configmap.yaml from a number of template files
  */
-@Mojo(threadSafe = true, name = "create-configmap", requiresDirectInvocation = false, requiresProject = true, defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
-public class KuutyCreateConfigMapMojo
+@Mojo(threadSafe = true, name = "generate-config", requiresDirectInvocation = false, requiresProject = true, defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
+public class KuutyGenerateConfigMapMojo
     extends AbstractMojo {
 
   /**
@@ -113,6 +113,7 @@ public class KuutyCreateConfigMapMojo
   public IoK8sApiCoreV1ConfigMap createConfigMap() {
     IoK8sApiCoreV1ConfigMap config = new IoK8sApiCoreV1ConfigMap();
     config.setApiVersion("apps/v1");
+    config.setKind("ConfigMap");
     IoK8sApimachineryPkgApisMetaV1ObjectMeta metadata = new IoK8sApimachineryPkgApisMetaV1ObjectMeta();
     metadata.setName("config");
     config.setMetadata(metadata);

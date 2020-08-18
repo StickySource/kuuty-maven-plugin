@@ -13,7 +13,7 @@ import org.openapitools.client.model.IoK8sApiCoreV1Secret;
 import org.yaml.snakeyaml.Yaml;
 
 @Mojo(threadSafe = true, name = "create-secret", requiresDirectInvocation = false, requiresProject = true, defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
-public class KuutyCreateSecretMojo
+public class KuutyGenerateSecretMojo
     extends AbstractMojo {
 
   @Override
