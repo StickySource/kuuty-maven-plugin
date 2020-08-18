@@ -9,7 +9,8 @@ import java.nio.file.Path;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.junit.Test;
-import org.openapitools.client.model.IoK8sApiCoreV1ConfigMap;
+
+import net.stickycode.kuuty.model.v18.IoK8sApiCoreV1ConfigMap;
 
 public class KuutyCreateConfigMapMojoTest {
 

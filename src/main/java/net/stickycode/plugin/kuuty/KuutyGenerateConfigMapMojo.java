@@ -6,23 +6,27 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import javax.inject.Inject;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.openapitools.client.model.IoK8sApiCoreV1ConfigMap;
-import org.openapitools.client.model.IoK8sApimachineryPkgApisMetaV1ObjectMeta;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
+
+import net.stickycode.kuuty.model.v18.IoK8sApiCoreV1ConfigMap;
+import net.stickycode.kuuty.model.v18.IoK8sApimachineryPkgApisMetaV1ObjectMeta;
 
 /**
  * Create a configmap.yaml from a number of template files
  */
 @Mojo(threadSafe = true, name = "generate-config", requiresDirectInvocation = false, requiresProject = true, defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
 public class KuutyGenerateConfigMapMojo
-    extends AbstractMojo {
+    extends AbstractMojo
+    implements KuutyTemplateCollectorConfiguration {
 
   /**
    * Directory containing the config template files to encapsulate
@@ -42,28 +46,17 @@ public class KuutyGenerateConfigMapMojo
   @Parameter(defaultValue = "${project.build.directory}/resources/kubernetes", required = true)
   private File outputDirectory;
 
+  @Inject
+  KuutyTemplateCollector collector;
+
   @Override
   public void execute() throws MojoExecutionException, MojoFailureException {
-    verifyConfiguration();
+    collector.verifyConfiguration(this);
 
     IoK8sApiCoreV1ConfigMap configmap = processConfigDirectory(configDirectory.toPath());
     generateFile(configmap, outputPath());
   }
 
-  protected void verifyConfiguration() throws MojoFailureException {
-    if (!configDirectory.isDirectory())
-      throw new MojoFailureException("base directory not found " + configDirectory);
-
-    if (!configDirectory.canRead())
-      throw new MojoFailureException("base directory cannot be read" + configDirectory);
-
-    try {
-      Files.createDirectories(outputDirectory.toPath());
-    }
-    catch (IOException e) {
-      throw new MojoFailureException("Could not create output directory " + outputDirectory, e);
-    }
-  }
 
   protected IoK8sApiCoreV1ConfigMap processConfigDirectory(Path configPath) {
     IoK8sApiCoreV1ConfigMap configmap = new IoK8sApiCoreV1ConfigMap();
@@ -118,6 +111,18 @@ public class KuutyGenerateConfigMapMojo
     metadata.setName("config");
     config.setMetadata(metadata);
     return config;
+  }
+
+
+  @Override
+  public Path getSourceDirectory() {
+    return configDirectory.toPath();
+  }
+
+
+  @Override
+  public Path getOutputDirectory() {
+    return outputDirectory.toPath();
   }
 
 }

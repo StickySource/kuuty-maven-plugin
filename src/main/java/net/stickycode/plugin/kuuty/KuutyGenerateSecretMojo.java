@@ -9,8 +9,9 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
-import org.openapitools.client.model.IoK8sApiCoreV1Secret;
 import org.yaml.snakeyaml.Yaml;
+
+import net.stickycode.kuuty.model.v18.IoK8sApiCoreV1Secret;
 
 @Mojo(threadSafe = true, name = "create-secret", requiresDirectInvocation = false, requiresProject = true, defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
 public class KuutyGenerateSecretMojo
