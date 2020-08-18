@@ -11,8 +11,6 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-import net.stickycode.kuuty.model.v18.IoK8sApiCoreV1ConfigMap;
-
 /**
  * Create a configmap.yaml from a number of template files
  */
@@ -52,7 +50,7 @@ public class KuutyGenerateConfigMapMojo
 
   @Override
   public void execute() throws MojoExecutionException, MojoFailureException {
-    KuutyTemplateProcessor<IoK8sApiCoreV1ConfigMap> processor = new KuutyConfigMapProcessor(name);
+    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor(name);
     collector.processSourceDirectory(configDirectory.toPath(), processor);
     generator.write(processor.getResource(), outputDirectory.toPath(), filename);
   }

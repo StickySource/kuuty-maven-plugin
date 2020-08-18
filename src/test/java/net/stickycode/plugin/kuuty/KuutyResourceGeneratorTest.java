@@ -23,7 +23,20 @@ public class KuutyResourceGeneratorTest {
       "</configuration>\n");
 
     Files.createDirectories(Path.of("target"));
-    new KuutyResourceGenerator().write(other, Path.of("target"), "config.yaml");
+    new KuutyResourceGenerator().write(other.getResource(), Path.of("target"), "config.yaml");
+  }
+
+  @Test
+  public void writeSecret() throws IOException {
+    KuutySecretProcessor other = new KuutySecretProcessor("thesecret");
+    other.processTemplate("one.properties", "a=value");
+    other.processTemplate("some.xml", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+        "<configuration>\n" +
+        "  <root level=\"info\" />\n" +
+        "</configuration>\n");
+
+    Files.createDirectories(Path.of("target"));
+    new KuutyResourceGenerator().write(other.getResource(), Path.of("target"), "secret.yaml");
   }
 
 }

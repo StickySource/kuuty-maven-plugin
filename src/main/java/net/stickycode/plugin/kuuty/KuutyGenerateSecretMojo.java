@@ -11,8 +11,6 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-import net.stickycode.kuuty.model.v18.IoK8sApiCoreV1ConfigMap;
-
 @Mojo(threadSafe = true, name = "create-secret", requiresDirectInvocation = false, requiresProject = true, defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
 public class KuutyGenerateSecretMojo
     extends AbstractMojo {
@@ -49,7 +47,7 @@ public class KuutyGenerateSecretMojo
 
   @Override
   public void execute() throws MojoExecutionException, MojoFailureException {
-    KuutyTemplateProcessor<IoK8sApiCoreV1ConfigMap> processor = new KuutySecretProcessor(name);
+    KuutySecretProcessor processor = new KuutySecretProcessor(name);
     collector.processSourceDirectory(secretDirectory.toPath(), processor);
     generator.write(processor.getResource(), outputDirectory.toPath(), filename);
   }
