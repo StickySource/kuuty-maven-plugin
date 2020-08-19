@@ -14,20 +14,19 @@ public class KuutyRepresenter
   @Override
   protected NodeTuple representJavaBeanProperty(Object javaBean, Property property, Object propertyValue, Tag customTag) {
     // if value of property is null, ignore it.
-    if (propertyValue == null) {
+    if (propertyValue == null)
       return null;
-    }
-    else {
-      return super.representJavaBeanProperty(javaBean, property, propertyValue, customTag);
-    }
+
+    return super.representJavaBeanProperty(javaBean, property, propertyValue, customTag);
   }
 
   @Override
   protected MappingNode representJavaBean(Set<Property> properties, Object javaBean) {
-      if (!classTags.containsKey(javaBean.getClass()))
-          addClassTag(javaBean.getClass(), Tag.MAP);
+    // all the beans are maps to avoid the type signature
+    if (!classTags.containsKey(javaBean.getClass()))
+      addClassTag(javaBean.getClass(), Tag.MAP);
 
-      return super.representJavaBean(properties, javaBean);
+    return super.representJavaBean(properties, javaBean);
   }
 
 }
