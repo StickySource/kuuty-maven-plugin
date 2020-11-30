@@ -58,8 +58,8 @@ public class KuutyGenerateConfigMapMojo
   @Override
   public void execute() throws MojoExecutionException, MojoFailureException {
     KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor(name);
-    collector.processSourceDirectory(configDirectory.toPath().resolve(outputContextPath), processor);
-    generator.write(processor.getResource(), outputDirectory.toPath(), filename);
+    collector.processSourceDirectory(configDirectory.toPath(), processor);
+    generator.write(processor.getResource(), outputDirectory.toPath().resolve(outputContextPath), filename);
   }
 
 }
