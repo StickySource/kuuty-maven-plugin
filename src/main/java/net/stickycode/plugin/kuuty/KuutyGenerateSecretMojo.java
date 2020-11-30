@@ -19,7 +19,7 @@ public class KuutyGenerateSecretMojo
    * Directory containing the config template files to encapsulate
    */
   @Parameter(defaultValue = "src/main/secret", required = true)
-  private File secretDirectory;
+  private File sourceDirectory;
 
   /**
    * The name of the secret file to create
@@ -55,7 +55,7 @@ public class KuutyGenerateSecretMojo
   @Override
   public void execute() throws MojoExecutionException, MojoFailureException {
     KuutySecretProcessor processor = new KuutySecretProcessor(name);
-    collector.processSourceDirectory(secretDirectory.toPath(), processor);
+    collector.processSourceDirectory(sourceDirectory.toPath(), processor);
     generator.write(processor.getResource(), outputDirectory.toPath().resolve(outputContextPath), filename);
   }
 

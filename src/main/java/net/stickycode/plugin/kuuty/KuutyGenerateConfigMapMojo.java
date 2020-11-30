@@ -22,7 +22,7 @@ public class KuutyGenerateConfigMapMojo
    * Directory containing the config template files to encapsulate
    */
   @Parameter(defaultValue = "src/main/config", required = true)
-  private File configDirectory;
+  private File sourceDirectory;
 
   /**
    * The name of the config map file to create
@@ -58,7 +58,7 @@ public class KuutyGenerateConfigMapMojo
   @Override
   public void execute() throws MojoExecutionException, MojoFailureException {
     KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor(name);
-    collector.processSourceDirectory(configDirectory.toPath(), processor);
+    collector.processSourceDirectory(sourceDirectory.toPath(), processor);
     generator.write(processor.getResource(), outputDirectory.toPath().resolve(outputContextPath), filename);
   }
 
