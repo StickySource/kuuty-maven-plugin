@@ -27,7 +27,7 @@ public class KuutyResourceGeneratorTest {
     Path target = Path.of("target");
     Files.createDirectories(target);
     new KuutyResourceGenerator().write(other.getResource(), target, "config.yaml");
-    assertThat(target.resolve("config.yaml")).hasContent("apiVersion: apps/v1\n" +
+    assertThat(target.resolve("config.yaml")).hasContent("apiVersion: v1\n" +
       "data:\n" +
       "  one.properties: a=value\n" +
       "  some.xml: |\n" +
@@ -52,7 +52,7 @@ public class KuutyResourceGeneratorTest {
     Path target = Path.of("target");
     Files.createDirectories(target);
     new KuutyResourceGenerator().write(other.getResource(), target, "secret.yaml");
-    assertThat(target.resolve("secret.yaml")).hasContent("apiVersion: apps/v1\n" +
+    assertThat(target.resolve("secret.yaml")).hasContent("apiVersion: v1\n" +
       "kind: Secret\n" +
       "metadata:\n" +
       "  name: thesecret\n" +
