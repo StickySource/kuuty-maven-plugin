@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>@pom.groupId@</groupId>
-  <artifactId>@pom.artifactId@-sanity</artifactId>
+  <artifactId>@pom.artifactId@-configAllSettings</artifactId>
   <version>@pom.version@</version>
   <packaging>jar</packaging>
 
@@ -19,6 +19,13 @@
             <goals>
               <goal>generate-config</goal>
             </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/resources/other</outputDirectory>
+              <outputContextPath>nested</outputContextPath>
+              <sourceDirectory>src/main/other</sourceDirectory>
+              <filename>other.yaml</filename>
+              <name>other-name</name>
+            </configuration>
           </execution>
         </executions>
       </plugin>

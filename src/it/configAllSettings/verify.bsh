@@ -1,0 +1,16 @@
+import java.io.File;
+import org.codehaus.plexus.util.FileUtils;
+
+File config = new File( basedir, "target/resources/other/nested/other.yaml" );
+System.out.println( "Checking for existence of first test file: " + config );
+if (!config.exists())
+  throw new RuntimeException(config.toString() + " not found" );
+
+String contents = FileUtils.fileRead( config, "UTF-8" );
+String expected = FileUtils.fileRead( new File( basedir, "expected.yaml"), "UTF-8" );
+
+if (contents.equals(expected)) {
+  return true;
+}
+
+throw new RuntimeException("Expected '\n" + contents + "'\n\n to equal '\n" + expected + "'\n");
