@@ -39,7 +39,7 @@ then a configuration like this
 
 Would create a file target/resources/kubernetes/configmap.yaml
 ```
-apiVersion: apps/v1
+apiVersion: v1
 data:
   one.properties: |
     a=value
