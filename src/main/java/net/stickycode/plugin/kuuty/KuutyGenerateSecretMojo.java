@@ -16,9 +16,9 @@ public class KuutyGenerateSecretMojo
     extends AbstractMojo {
 
   /**
-   * Directory containing the config template files to encapsulate
+   * Directory containing the secret sample files to encapsulate
    */
-  @Parameter(defaultValue = "src/main/secret", required = true)
+  @Parameter(defaultValue = "src/main/secrets", required = true)
   private File sourceDirectory;
 
   /**
