@@ -39,6 +39,13 @@ public class KuutyGenerateSecretMojo
   @Parameter(defaultValue = "${project.build.directory}/resources/kubernetes", required = true)
   private File outputDirectory;
 
+  /**
+   * The path in the outputDirectory to place the files, useful when you are overriding/embellishing a Software Product or other
+   * Kubernetes resources aggregation
+   */
+  @Parameter(defaultValue = "")
+  private String outputContextPath = "";
+
   @Inject
   KuutyTemplateCollector collector;
 
@@ -48,7 +55,7 @@ public class KuutyGenerateSecretMojo
   @Override
   public void execute() throws MojoExecutionException, MojoFailureException {
     KuutySecretProcessor processor = new KuutySecretProcessor(name);
-    collector.processSourceDirectory(secretDirectory.toPath(), processor);
+    collector.processSourceDirectory(secretDirectory.toPath().resolve(outputContextPath), processor);
     generator.write(processor.getResource(), outputDirectory.toPath(), filename);
   }
 

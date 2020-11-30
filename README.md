@@ -25,7 +25,7 @@ then a configuration like this
 <plugin>
   <groupId>net.stickycode.plugins</groupId>
   <artifactId>kuuty-maven-plugin</artifactId>
-  <version>1.3-SNAPSHOT</version>
+  <version>1.4</version>
   <executions>
     <execution>
       <id>generate-config</id>
@@ -51,3 +51,69 @@ kind: ConfigMap
 metadata:
   name: kuuty-maven-plugin-sanity
 ```
+
+### Full configuation with all the defaults
+
+```
+<plugin>
+  <groupId>net.stickycode.plugins</groupId>
+  <artifactId>kuuty-maven-plugin</artifactId>
+  <version>1.4</version>
+  <executions>
+    <execution>
+      <id>generate-config</id>
+      <goals>
+        <goal>generate-config</goal>
+      </goals>
+      <phase>process-resources</phase>
+      <configuration>
+        <outputDirectory>${project.build.directory}/resources/kubernetes</outputDirectory>
+        <outputContextPath></outputContextPath>
+        <sourceDirectory>src/main/config</sourceDirectory>
+        <filename>configmap.yaml</fileName>
+        <name>${project.artifactId</name>
+      </configuration>
+    </execution>
+    <execution>
+      <id>generate-secret</id>
+      <goals>
+        <goal>generate-secret</goal>
+      </goals>
+      <phase>process-resources</phase>
+      <configuration>
+        <outputDirectory>${project.build.directory}/resources/kubernetes</outputDirectory>
+        <outputContextPath></outputContextPath>
+        <sourceDirectory>src/main/secrets</sourceDirectory>
+        <filename>secret.yaml</fileName>
+        <name>${project.artifactId</name>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>
+```
+
+#### Output context path
+
+```
+<execution>
+  <id>generate-config</id>
+  <goals>
+    <goal>generate-config</goal>
+  </goals>
+  <phase>process-resources</phase>
+</execution>
+<execution>
+  <id>generate-config-nested</id>
+  <goals>
+    <goal>generate-config</goal>
+  </goals>
+  <phase>process-resources</phase>
+  <configuration>
+    <sourceDirectory>src/main/special-configs</sourceDirectory>
+    <outputContextPath>nested/folder</outputContextPath>
+  </configuration>
+</execution>
+```
+
+Notes:
+* The outputContextPath is appended to the output directory, useful when you have one execution with nested resources

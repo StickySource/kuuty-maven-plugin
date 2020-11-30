@@ -42,6 +42,13 @@ public class KuutyGenerateConfigMapMojo
   @Parameter(defaultValue = "${project.build.directory}/resources/kubernetes", required = true)
   private File outputDirectory;
 
+  /**
+   * The path in the outputDirectory to place the files, useful when you are overriding/embellishing a Software Product or other
+   * Kubernetes resources aggregation
+   */
+  @Parameter(defaultValue = "")
+  private String outputContextPath = "";
+
   @Inject
   KuutyTemplateCollector collector;
 
@@ -51,7 +58,7 @@ public class KuutyGenerateConfigMapMojo
   @Override
   public void execute() throws MojoExecutionException, MojoFailureException {
     KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor(name);
-    collector.processSourceDirectory(configDirectory.toPath(), processor);
+    collector.processSourceDirectory(configDirectory.toPath().resolve(outputContextPath), processor);
     generator.write(processor.getResource(), outputDirectory.toPath(), filename);
   }
 
