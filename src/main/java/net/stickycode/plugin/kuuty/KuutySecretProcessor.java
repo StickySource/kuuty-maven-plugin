@@ -14,7 +14,7 @@ public class KuutySecretProcessor
 
   private IoK8sApiCoreV1Secret createSecret(String name) {
     IoK8sApiCoreV1Secret config = new IoK8sApiCoreV1Secret();
-    config.setApiVersion("apps/v1");
+    config.setApiVersion("v1");
     config.setKind("Secret");
     config.setType("Opaque");
     IoK8sApimachineryPkgApisMetaV1ObjectMeta metadata = new IoK8sApimachineryPkgApisMetaV1ObjectMeta();

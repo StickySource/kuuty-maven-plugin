@@ -19,7 +19,7 @@ class KuutyConfigMapProcessor
 
   public IoK8sApiCoreV1ConfigMap createConfigMap(String name) {
     IoK8sApiCoreV1ConfigMap config = new IoK8sApiCoreV1ConfigMap();
-    config.setApiVersion("apps/v1");
+    config.setApiVersion("v1");
     config.setKind("ConfigMap");
     IoK8sApimachineryPkgApisMetaV1ObjectMeta metadata = new IoK8sApimachineryPkgApisMetaV1ObjectMeta();
     metadata.setName(name);
