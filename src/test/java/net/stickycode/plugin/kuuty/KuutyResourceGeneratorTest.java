@@ -37,7 +37,7 @@ public class KuutyResourceGeneratorTest {
       "    </configuration>\n" +
       "kind: ConfigMap\n" +
       "metadata:\n" +
-      "  name: theconfig");
+      "  name: theconfig\n");
   }
 
   @Test
@@ -63,8 +63,7 @@ public class KuutyResourceGeneratorTest {
       "    <configuration>\n" +
       "      <root level=\"info\" />\n" +
       "    </configuration>\n" +
-      "type: Opaque\n" +
-      "");
+      "type: Opaque\n");
 
   }
 

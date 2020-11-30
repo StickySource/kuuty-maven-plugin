@@ -11,15 +11,15 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-@Mojo(threadSafe = true, name = "create-secret", requiresDirectInvocation = false, requiresProject = true, defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
+@Mojo(threadSafe = true, name = "generate-secret", requiresDirectInvocation = false, requiresProject = true, defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
 public class KuutyGenerateSecretMojo
     extends AbstractMojo {
 
   /**
-   * Directory containing the config template files to encapsulate
+   * Directory containing the secret sample files to encapsulate
    */
-  @Parameter(defaultValue = "src/main/secret", required = true)
-  private File secretDirectory;
+  @Parameter(defaultValue = "src/main/secrets", required = true)
+  private File sourceDirectory;
 
   /**
    * The name of the secret file to create
@@ -55,8 +55,8 @@ public class KuutyGenerateSecretMojo
   @Override
   public void execute() throws MojoExecutionException, MojoFailureException {
     KuutySecretProcessor processor = new KuutySecretProcessor(name);
-    collector.processSourceDirectory(secretDirectory.toPath().resolve(outputContextPath), processor);
-    generator.write(processor.getResource(), outputDirectory.toPath(), filename);
+    collector.processSourceDirectory(sourceDirectory.toPath(), processor);
+    generator.write(processor.getResource(), outputDirectory.toPath().resolve(outputContextPath), filename);
   }
 
 }
