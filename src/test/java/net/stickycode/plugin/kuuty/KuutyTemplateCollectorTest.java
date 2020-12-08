@@ -31,6 +31,14 @@ public class KuutyTemplateCollectorTest {
   }
 
   @Test
+  public void singleWithAppends() throws MojoExecutionException, MojoFailureException {
+    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor("configname");
+    IoK8sApiCoreV1ConfigMap other = processor.getResource();
+    other.putDataItem("one.properties", "a=value\nappend=value");
+    check("singleWithAppends", other);
+  }
+
+  @Test
   public void twoFiles() throws MojoExecutionException, MojoFailureException {
     KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor("configname");
     IoK8sApiCoreV1ConfigMap other = processor.getResource();
@@ -40,6 +48,18 @@ public class KuutyTemplateCollectorTest {
       "  <root level=\"info\" />\n" +
       "</configuration>\n");
     check("twoFiles", other);
+  }
+
+  @Test
+  public void twoFilesWithAppends() throws MojoExecutionException, MojoFailureException {
+    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor("configname");
+    IoK8sApiCoreV1ConfigMap other = processor.getResource();
+    other.putDataItem("one.properties", "a=value\nappend=value");
+    other.putDataItem("some.xml", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+        "<configuration>\n" +
+        "  <root level=\"info\" />\n" +
+        "</configuration>\n");
+    check("twoFilesWithAppends", other);
   }
 
   private void check(String example, IoK8sApiCoreV1ConfigMap other) {

@@ -117,3 +117,35 @@ metadata:
 
 Notes:
 * The outputContextPath is appended to the output directory, useful when you have one execution with nested resources
+
+### Appending to a file
+
+Sometimes you have multiple sources of configuration that need to put the config into one file.
+
+base.properties
+```
+a=b
+```
+
+base.properties.append-extra
+```
+extra=value
+```
+
+Any file named X.append-Y will be appended to the end of X before producing the secret.yaml or configmap.yaml, e.g.
+```
+a=b
+extra=value
+```
+
+Something like this will result
+```
+apiVersion: v1
+data:
+  one.properties: |
+    a=value
+    extra=value
+kind: ConfigMap
+metadata:
+  name: kuuty-maven-plugin-sanity
+```
