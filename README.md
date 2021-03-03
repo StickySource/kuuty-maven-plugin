@@ -71,7 +71,8 @@ metadata:
         <outputContextPath></outputContextPath>
         <sourceDirectory>src/main/config</sourceDirectory>
         <filename>configmap.yaml</fileName>
-        <name>${project.artifactId</name>
+        <name>${project.artifactId}</name>
+        <namespace>${environment}</name>
       </configuration>
     </execution>
     <execution>
@@ -85,7 +86,8 @@ metadata:
         <outputContextPath></outputContextPath>
         <sourceDirectory>src/main/secrets</sourceDirectory>
         <filename>secret.yaml</fileName>
-        <name>${project.artifactId</name>
+        <name>${project.artifactId}</name>
+        <namespace>${environment}</name>
       </configuration>
     </execution>
   </executions>

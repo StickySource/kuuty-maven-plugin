@@ -24,7 +24,7 @@ public class KuutyTemplateCollectorTest {
 
   @Test
   public void single() throws MojoExecutionException, MojoFailureException {
-    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor("configname");
+    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor("configname", "namespace");
     IoK8sApiCoreV1ConfigMap other = processor.getResource();
     other.putDataItem("one.properties", "a=value");
     check("single", other);
@@ -32,7 +32,7 @@ public class KuutyTemplateCollectorTest {
 
   @Test
   public void singleWithAppends() throws MojoExecutionException, MojoFailureException {
-    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor("configname");
+    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor("configname", "namespace");
     IoK8sApiCoreV1ConfigMap other = processor.getResource();
     other.putDataItem("one.properties", "a=value\nappend=value");
     check("singleWithAppends", other);
@@ -40,7 +40,7 @@ public class KuutyTemplateCollectorTest {
 
   @Test
   public void twoFiles() throws MojoExecutionException, MojoFailureException {
-    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor("configname");
+    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor("configname", "namespace");
     IoK8sApiCoreV1ConfigMap other = processor.getResource();
     other.putDataItem("one.properties", "a=value");
     other.putDataItem("some.xml", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
@@ -52,7 +52,7 @@ public class KuutyTemplateCollectorTest {
 
   @Test
   public void twoFilesWithAppends() throws MojoExecutionException, MojoFailureException {
-    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor("configname");
+    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor("configname", "namespace");
     IoK8sApiCoreV1ConfigMap other = processor.getResource();
     other.putDataItem("one.properties", "a=value\nappend=value");
     other.putDataItem("some.xml", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
@@ -63,7 +63,7 @@ public class KuutyTemplateCollectorTest {
   }
 
   private void check(String example, IoK8sApiCoreV1ConfigMap other) {
-    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor("configname");
+    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor("configname", "namespace");
 
     new KuutyTemplateCollector().processSourceDirectory(Path.of("src/test/config", example), processor);
     assertThat(processor.getResource()).isEqualToComparingFieldByField(other);
