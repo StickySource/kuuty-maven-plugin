@@ -16,7 +16,7 @@ public abstract class KuutyMojo extends AbstractMojo {
   @Parameter(defaultValue = "${project.name}", required = true)
   String name;
 
-  @Parameter(defaultValue = "default", required = true)
+  @Parameter
   String namespace;
 
   /**
@@ -29,7 +29,7 @@ public abstract class KuutyMojo extends AbstractMojo {
    * The path in the outputDirectory to place the files, useful when you are overriding/embellishing a Software Product or other
    * Kubernetes resources aggregation
    */
-  @Parameter(defaultValue = "")
+  @Parameter
   String outputContextPath = "";
 
   @Inject
