@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  one.properties: |
+    a=value
+  three-with-placeholder.properties: |
+    a=value
+    b=value
+    c=${placeholder}
+kind: ConfigMap
+metadata:
+  name: kuuty-maven-plugin-configNamespace
+  namespace: environment
