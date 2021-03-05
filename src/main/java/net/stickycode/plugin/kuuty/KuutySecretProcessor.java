@@ -8,17 +8,18 @@ public class KuutySecretProcessor
 
   private final IoK8sApiCoreV1Secret secret;
 
-  public KuutySecretProcessor(String name) {
-    this.secret = createSecret(name);
+  public KuutySecretProcessor(String name, String namespace) {
+    this.secret = createSecret(name, namespace);
   }
 
-  private IoK8sApiCoreV1Secret createSecret(String name) {
+  private IoK8sApiCoreV1Secret createSecret(String name, String namespace) {
     IoK8sApiCoreV1Secret config = new IoK8sApiCoreV1Secret();
     config.setApiVersion("v1");
     config.setKind("Secret");
     config.setType("Opaque");
     IoK8sApimachineryPkgApisMetaV1ObjectMeta metadata = new IoK8sApimachineryPkgApisMetaV1ObjectMeta();
     metadata.setName(name);
+    metadata.setNamespace(namespace);
     config.setMetadata(metadata);
     return config;
   }

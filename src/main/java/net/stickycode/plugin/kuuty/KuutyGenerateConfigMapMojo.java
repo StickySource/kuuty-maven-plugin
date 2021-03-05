@@ -16,7 +16,7 @@ import org.apache.maven.plugins.annotations.Parameter;
  */
 @Mojo(threadSafe = true, name = "generate-config", requiresDirectInvocation = false, requiresProject = true, defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
 public class KuutyGenerateConfigMapMojo
-    extends AbstractMojo {
+    extends KuutyMojo {
 
   /**
    * Directory containing the config template files to encapsulate
@@ -30,36 +30,10 @@ public class KuutyGenerateConfigMapMojo
   @Parameter(defaultValue = "configmap.yaml", required = true)
   private String filename;
 
-  /**
-   * The name of the config map resources in Kubernetes
-   */
-  @Parameter(defaultValue = "${project.name}", required = true)
-  String name;
-
-  /**
-   * Where to write the generated config map
-   */
-  @Parameter(defaultValue = "${project.build.directory}/resources/kubernetes", required = true)
-  private File outputDirectory;
-
-  /**
-   * The path in the outputDirectory to place the files, useful when you are overriding/embellishing a Software Product or other
-   * Kubernetes resources aggregation
-   */
-  @Parameter(defaultValue = "")
-  private String outputContextPath = "";
-
-  @Inject
-  KuutyTemplateCollector collector;
-
-  @Inject
-  KuutyResourceGenerator generator;
-
   @Override
   public void execute() throws MojoExecutionException, MojoFailureException {
-    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor(name);
+    KuutyConfigMapProcessor processor = new KuutyConfigMapProcessor(name, namespace);
     collector.processSourceDirectory(sourceDirectory.toPath(), processor);
     generator.write(processor.getResource(), outputDirectory.toPath().resolve(outputContextPath), filename);
   }
-
 }

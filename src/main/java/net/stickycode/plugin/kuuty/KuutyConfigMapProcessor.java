@@ -8,8 +8,8 @@ class KuutyConfigMapProcessor
 
   private final IoK8sApiCoreV1ConfigMap configMap;
 
-  KuutyConfigMapProcessor(String name) {
-    this.configMap = createConfigMap(name);
+  KuutyConfigMapProcessor(String name, String namespace) {
+    this.configMap = createConfigMap(name, namespace);
   }
 
   @Override
@@ -17,12 +17,13 @@ class KuutyConfigMapProcessor
     configMap.putDataItem(name, body);
   }
 
-  public IoK8sApiCoreV1ConfigMap createConfigMap(String name) {
+  public IoK8sApiCoreV1ConfigMap createConfigMap(String name, String namespace) {
     IoK8sApiCoreV1ConfigMap config = new IoK8sApiCoreV1ConfigMap();
     config.setApiVersion("v1");
     config.setKind("ConfigMap");
     IoK8sApimachineryPkgApisMetaV1ObjectMeta metadata = new IoK8sApimachineryPkgApisMetaV1ObjectMeta();
     metadata.setName(name);
+    metadata.setNamespace(namespace);
     config.setMetadata(metadata);
     return config;
   }
