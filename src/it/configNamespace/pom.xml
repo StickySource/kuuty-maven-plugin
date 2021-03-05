@@ -20,7 +20,7 @@
               <goal>generate-config</goal>
             </goals>
             <configuration>
-              <namespace>environment</namespace>
+              <namespace>$${environment}</namespace>
             </configuration>
           </execution>
         </executions>

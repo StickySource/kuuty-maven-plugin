@@ -9,4 +9,4 @@ data:
 kind: ConfigMap
 metadata:
   name: kuuty-maven-plugin-configNamespace
-  namespace: environment
+  namespace: ${environment}
