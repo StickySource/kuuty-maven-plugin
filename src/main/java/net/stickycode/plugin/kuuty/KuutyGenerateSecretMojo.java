@@ -26,7 +26,7 @@ public class KuutyGenerateSecretMojo
 
   @Override
   public void execute() throws MojoExecutionException, MojoFailureException {
-    KuutySecretProcessor processor = new KuutySecretProcessor(name, namespace);
+    KuutySecretProcessor processor = new KuutySecretProcessor(name, namespace, type);
     collector.processSourceDirectory(sourceDirectory.toPath(), processor);
     generator.write(processor.getResource(), outputDirectory.toPath().resolve(outputContextPath), filename);
   }

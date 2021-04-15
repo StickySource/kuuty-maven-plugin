@@ -19,6 +19,9 @@ public abstract class KuutyMojo extends AbstractMojo {
   @Parameter
   String namespace;
 
+  @Parameter(defaultValue = "Opaque", required = true)
+  String type;
+
   /**
    * Where to write the generated resources
    */

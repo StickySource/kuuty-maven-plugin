@@ -68,7 +68,7 @@ public class KuutyResourceGeneratorTest {
 
   @Test
   public void writeSecret() throws IOException {
-    KuutySecretProcessor other = new KuutySecretProcessor("thesecret", null);
+    KuutySecretProcessor other = new KuutySecretProcessor("thesecret", null, "Opaque");
     other.processTemplate("one.properties", "a=value");
     other.processTemplate("some.xml", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
       "<configuration>\n" +
@@ -95,7 +95,7 @@ public class KuutyResourceGeneratorTest {
 
   @Test
   public void writeSecretWithNamespace() throws IOException {
-    KuutySecretProcessor other = new KuutySecretProcessor("thesecret", "thenamespace");
+    KuutySecretProcessor other = new KuutySecretProcessor("thesecret", "thenamespace", "fakeType");
     other.processTemplate("one.properties", "a=value");
     other.processTemplate("some.xml", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
       "<configuration>\n" +
@@ -117,7 +117,7 @@ public class KuutyResourceGeneratorTest {
       "    <configuration>\n" +
       "      <root level=\"info\" />\n" +
       "    </configuration>\n" +
-      "type: Opaque\n");
+      "type: fakeType\n");
 
   }
 
