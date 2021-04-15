@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kuuty-maven-plugin-secret
+stringData:
+  one.properties: |
+    a=value
+  three-with-placeholder.properties: |
+    a=value
+    b=value
+    c=${placeholder}
+type: fakeType
